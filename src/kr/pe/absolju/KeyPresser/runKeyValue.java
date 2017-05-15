@@ -14,7 +14,7 @@ import kr.pe.absolju.KeyPresser.KeyValueProtos.KeyInput;
 
 public class runKeyValue {
 	
-	private class KeydataBuffer {
+	private static class KeydataBuffer {
 		private KeyData keydata;
 		private boolean empty = true;
 		synchronized KeyData get() {
@@ -43,7 +43,7 @@ public class runKeyValue {
 		}
 	}
 	
-	class GetKeydata implements Runnable {
+	static class GetKeydata implements Runnable {
 		private KeydataBuffer buffer;
 		GetKeydata(KeydataBuffer buffer) {this.buffer = buffer;}
 		
@@ -75,7 +75,7 @@ public class runKeyValue {
 		}
 	}
 	
-	class RunKeydata implements Runnable {
+	static class RunKeydata implements Runnable {
 		private KeydataBuffer buffer;
 		RunKeydata(KeydataBuffer buffer) {this.buffer = buffer;}
 
@@ -120,7 +120,7 @@ public class runKeyValue {
 		
 	}
 	
-	public void run() {
+	public static void run() {
 		KeydataBuffer buffer = new KeydataBuffer();
 		
 		(new Thread(new GetKeydata(buffer))).start();
