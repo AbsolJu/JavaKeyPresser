@@ -94,3 +94,6 @@ hs_err_pid*
 # Compiler excute file and temporary files #
 protoc.exe
 output.prbuf
+
+### working Files ###
+*.psd
