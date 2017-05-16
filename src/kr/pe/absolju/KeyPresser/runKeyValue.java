@@ -14,6 +14,8 @@ import kr.pe.absolju.KeyPresser.KeyValueProtos.KeyInput;
 
 public class runKeyValue {
 	
+	private static boolean runFlag = false;
+	
 	private static class KeydataBuffer {
 		private KeyData keydata;
 		private boolean empty = true;
@@ -43,7 +45,7 @@ public class runKeyValue {
 		}
 	}
 	
-	static class GetKeydata implements Runnable {
+	private static class GetKeydata implements Runnable {
 		private KeydataBuffer buffer;
 		GetKeydata(KeydataBuffer buffer) {this.buffer = buffer;}
 		
@@ -52,7 +54,7 @@ public class runKeyValue {
 			ServerSocket ServSocket = null;
 			try {
 				ServSocket = new ServerSocket(8080); //Port 하드코딩
-				while (true) {
+				while (runFlag) {
 					Socket socket = ServSocket.accept();
 					try {
 						buffer.put(KeyData.parseFrom(new DataInputStream(socket.getInputStream())));
@@ -75,13 +77,13 @@ public class runKeyValue {
 		}
 	}
 	
-	static class RunKeydata implements Runnable {
+	private static class RunKeydata implements Runnable {
 		private KeydataBuffer buffer;
 		RunKeydata(KeydataBuffer buffer) {this.buffer = buffer;}
 
 		@Override
 		public void run() {
-			while(true) {
+			while(runFlag) {
 				KeyData keydata = buffer.get();
 
 				String allowSenderId = "absolju";
@@ -120,10 +122,17 @@ public class runKeyValue {
 		
 	}
 	
-	public static void run() {
+	public static void run(boolean on) {
 		KeydataBuffer buffer = new KeydataBuffer();
+		Thread get = new Thread(new GetKeydata(buffer));
+		Thread run = new Thread(new RunKeydata(buffer));
 		
-		(new Thread(new GetKeydata(buffer))).start();
-		(new Thread(new RunKeydata(buffer))).start();
+		if(on==true) {
+			runFlag = true;
+			get.start(); run.start();
+		} else {
+			runFlag = false;
+		}
 	}
+	
 }
