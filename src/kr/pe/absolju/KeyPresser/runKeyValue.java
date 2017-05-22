@@ -98,18 +98,32 @@ public class runKeyValue {
 				
 				
 				if(keydata.getMacro() == true) { //매크로 저장된 입력
-					//내용 없음
-				} else if(keydata.getKeyinputCount() > 0) { //키 입력이 있을 경우
 					try {
 						List<KeyInput> keyList = keydata.getKeyinputList();
 						Robot robot = new Robot();
 						
 						for(KeyInput nowKey : keyList) {
+							Thread.sleep(nowKey.getWait());
 							if(nowKey.getPress()) {
 								robot.keyPress(nowKey.getValue());
 							} else {
 								robot.keyRelease(nowKey.getValue());
 							}
+						}
+					} catch (AWTException e) {
+						e.printStackTrace();
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				} else if(keydata.getKeyinputCount() == 1) { //키 입력이 있을 경우
+					try {						
+						KeyInput nowKey = keydata.getKeyinput(0);
+						Robot robot = new Robot();
+						
+						if(nowKey.getPress()) {
+							robot.keyPress(nowKey.getValue());
+						} else {
+							robot.keyRelease(nowKey.getValue());
 						}
 					} catch (AWTException e) {
 						e.printStackTrace();
