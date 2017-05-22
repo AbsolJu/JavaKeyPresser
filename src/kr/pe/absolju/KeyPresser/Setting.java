@@ -21,6 +21,7 @@ public class Setting {
 	}
 	public static void setSocketNumber(int socketNumber) {
 		Setting.socketNumber = socketNumber;
+		SaveFile(socketNumber);
 	}
 	
 	

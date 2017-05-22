@@ -75,6 +75,7 @@ public class AppUI {
         	public void actionPerformed(ActionEvent e) {
         		start.setEnabled(false);
         		stop.setEnabled(true);
+        		setting.setEnabled(false);
         		runKeyValue.run(true);
         	}
         });
@@ -82,6 +83,7 @@ public class AppUI {
         	public void actionPerformed(ActionEvent e) {
         		start.setEnabled(true);
         		stop.setEnabled(false);
+        		setting.setEnabled(true);
         		runKeyValue.run(false);
         	}
         });
@@ -127,6 +129,7 @@ public class AppUI {
 		JPanel optionList = new JPanel();
 		JLabel portLabel = new JLabel("Port Number:");
 		JTextField portField = new JTextField(10);
+		portField.setText(String.valueOf(Setting.getSocketNumber()));
 		optionList.add(portLabel);
 		optionList.add(portField);
 		
@@ -138,6 +141,14 @@ public class AppUI {
 		settingFrame.add(ok, BorderLayout.PAGE_END);
 		
 		settingFrame.setVisible(true);
+		
+		ok.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String inputPortNumber = portField.getText();
+				Setting.setSocketNumber(Integer.parseInt(inputPortNumber));
+			}
+		});
 	}
 	
 }
