@@ -17,7 +17,7 @@ import javax.swing.JFrame;
 
 public class AppUI {
 	
-	final static Image iconGIF = Toolkit.getDefaultToolkit().getImage("img/icon.gif");
+	final static Image iconGIF = Toolkit.getDefaultToolkit().getImage("img/icon2.gif");
 	
 	public static void create() {
         if (!SystemTray.isSupported()) {
@@ -98,6 +98,13 @@ public class AppUI {
 		aboutDialog.setLocationRelativeTo(null);
 		
 		aboutDialog.setVisible(true);
+		
+		Label M1 = new Label("Protocol Buffer");
+		Label M2 = new Label("Java KeyPresser&Sender");
+		M1.setBounds(10,10,1000,20);
+		M2.setBounds(10,30,1000,20);
+		aboutDialog.add(M1);
+		aboutDialog.add(M2);
 	}
 	
 	public static void SettingFrame() {
