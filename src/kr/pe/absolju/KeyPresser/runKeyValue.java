@@ -15,7 +15,7 @@ import kr.pe.absolju.KeyPresser.KeyValueProtos.KeyInput;
 public class runKeyValue {
 	
 	private static boolean runFlag = false;
-	
+
 	private static class KeydataBuffer {
 		private KeyData keydata;
 		private boolean empty = true;
@@ -53,7 +53,7 @@ public class runKeyValue {
 		public void run() {
 			ServerSocket ServSocket = null;
 			try {
-				ServSocket = new ServerSocket(8080); //Port 하드코딩
+				ServSocket = new ServerSocket(Setting.getSocketNumber());
 				while (runFlag) {
 					Socket socket = ServSocket.accept();
 					try {
@@ -124,12 +124,11 @@ public class runKeyValue {
 	
 	public static void run(boolean on) {
 		KeydataBuffer buffer = new KeydataBuffer();
-		Thread get = new Thread(new GetKeydata(buffer));
-		Thread run = new Thread(new RunKeydata(buffer));
 		
 		if(on==true) {
 			runFlag = true;
-			get.start(); run.start();
+			new Thread(new GetKeydata(buffer)).start();
+			new Thread(new RunKeydata(buffer)).start();
 		} else {
 			runFlag = false;
 		}
