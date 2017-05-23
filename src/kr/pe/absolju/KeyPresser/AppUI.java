@@ -5,7 +5,6 @@ package kr.pe.absolju.KeyPresser;
 import java.awt.AWTException;
 import java.awt.BorderLayout;
 import java.awt.Image;
-import java.awt.Label;
 import java.awt.MenuItem;
 import java.awt.PopupMenu;
 import java.awt.SystemTray;
@@ -14,6 +13,7 @@ import java.awt.TrayIcon;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -99,18 +99,21 @@ public class AppUI {
 	
 	public static void AboutDialog() {
 		JDialog aboutDialog = new JDialog();
+		ImageIcon image1;
+		image1 = new ImageIcon("img/icon2.GIF");
+		
 		aboutDialog.setTitle("About..");
 		aboutDialog.setSize(380, 150);
 		aboutDialog.setIconImage(iconGIF);
 		aboutDialog.setResizable(false);
 		aboutDialog.setLocationRelativeTo(null);
 		
-		Label M1 = new Label("Protocol Buffer");
-		Label M2 = new Label("Java KeyPresser&Sender");
-		M1.setBounds(10,10,1000,20);
-		M2.setBounds(10,30,1000,20);
-		aboutDialog.add(M1);
-		aboutDialog.add(M2);
+		aboutDialog.setLayout(new BorderLayout());
+		
+		JLabel M1 = new JLabel("<html>Protocol Buffer<br>Java KeyPresser&Sender<br></html>");
+		JLabel M2 = new JLabel(image1);
+		aboutDialog.add(M1,BorderLayout.CENTER);
+		aboutDialog.add(M2,BorderLayout.WEST);
 		
 		aboutDialog.setVisible(true);
 	}
